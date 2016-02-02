@@ -12,37 +12,65 @@ namespace tehtävä2
         static void Main(string[] args)
         {
             string number = null;
-
-           
+            double doublerino;
+            int integer;
             {
                 // kysytään käyttäjältä rivi
+                StreamWriter outputFile = new StreamWriter(@"Z:\olio ohjelmointi\Demo07\tehtävä2.integer.txt");
+                StreamWriter outputFile2 = new StreamWriter(@"Z:\olio ohjelmointi\Demo07\tehtävä2.txt");
                 do
                 {
-                    StreamWriter outputFile = new StreamWriter(@"d:\integer.txt");
+
                     Console.WriteLine("Give a number (enter stops):");
-                    int integer;
-                    
-                    bool parsed = Int32.TryParse(number, out integer);
+                    number = Console.ReadLine();
+
+
+                    bool parsed = int.TryParse(number, out integer);
                     if (!parsed)
+                    {
+                        double.TryParse(number, out doublerino);
+                        outputFile2.WriteLine(doublerino); // kirjoitetaan levylle
+                    }
+                    else
+                    {
+                        outputFile.WriteLine(integer);
 
-                        number = Console.ReadLine();
 
-                    outputFile.WriteLine(integer); // kirjoitetaan levylle
-                
-                else
-                {
-                    double doublerino;
-                    bool parsed2 = Double.TryParse(number, out doublerino);
-                        StreamWriter outputFile2 = new StreamWriter(@"d:\double.txt");
 
-                        {
-                            while (number.Length != 0) ;
-                        }
                     }
 
-                    // suljetaan tiedosto
-                    outputFile.Close();
+                } while (number.Length != 0);
 
+
+
+                // suljetaan tiedosto
+                outputFile.Close();
+                outputFile2.Close();
+
+                try
+                {
+                    using (StreamReader sr = new StreamReader(@"Z:\olio ohjelmointi\Demo07\tehtävä2.integer.txt"))
+                    using (StreamReader sr1 = new StreamReader(@"Z:\olio ohjelmointi\Demo07\tehtävä2.txt"))
+                    {
+                        // read the stream to a string, and write the string to console
+                        String line2 = sr.ReadToEnd();
+                        String line3 = sr1.ReadToEnd();
+                        Console.WriteLine(line2);
+                        Console.WriteLine(line3);
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+    }
+}
                 
-    
+
+
+
 
